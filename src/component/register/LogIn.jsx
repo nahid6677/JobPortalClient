@@ -25,6 +25,7 @@ const LogIn = () => {
           console.log(result.user.email);
           const user = { email: result.user.email }
           // navigate(from);
+          // send a request and "ONLY" create a jwt token
           axios.post('http://localhost:3000/jwt', user,{
             withCredentials: true
           })

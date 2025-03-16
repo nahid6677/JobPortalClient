@@ -14,7 +14,7 @@ const MyApplication = () => {
     //     // console.log(data);
     //   });
     axios.get(`http://localhost:3000/job-application?email=${user.email}`, {
-      withCredentials: true
+      withCredentials: true // when use {withCredentials:true } then sent my browser cookies jwt token to the server side.
     })
     .then(data=>{
       console.log(data.data)
