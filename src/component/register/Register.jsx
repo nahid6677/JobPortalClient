@@ -1,13 +1,13 @@
 import Lottie from "lottie-react";
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import registerLottieData from "../../assets/Lottie/Register.json";
 import AuthContext from "../authContext/AuthContext";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-} from "firebase/auth";
-import auth from "../firebase/Firebase.init";
+// import {
+//   GoogleAuthProvider,
+//   signInWithPopup,
+//   signInWithRedirect,
+// } from "firebase/auth";
+// import auth from "../firebase/Firebase.init";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const Register = () => {
         .then((result) => {
           if (result.user) {
             setLoading(false);
-            console.log(result.user);
+            // console.log(result.user);
           }
         })
         .catch((err) => {

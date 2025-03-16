@@ -1,10 +1,12 @@
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../authContext/AuthContext";
 import Lottie from "lottie-react";
 import loginLottie from "../../assets/Lottie/Login.json";
 import { LiaEyeSlash, LiaEyeSolid } from "react-icons/lia";
+import axios from "axios";
+import { tr } from "motion/react-client";
 const LogIn = () => {
   const { popupSign, setLoading, loginUser } = useContext(AuthContext);
   const emailRef = useRef(null);
@@ -20,8 +22,17 @@ const LogIn = () => {
       .then((result) => {
         if (result.user) {
           setLoading(false);
-          console.log(result.user);
-          navigate(from);
+          console.log(result.user.email);
+          const user = { email: result.user.email }
+          // navigate(from);
+          axios.post('http://localhost:3000/jwt', user,{
+            withCredentials: true
+          })
+            .then(data => {
+              console.log(data.data);
+            })
+            .catch(err => console.log(err));
+
         }
       })
       .catch((err) => {
@@ -38,7 +49,15 @@ const LogIn = () => {
       .then((result) => {
         if (result.user) {
           setLoading(false);
-          console.log(result.user);
+          navigate(from);
+          // console.log(result.user);
+          axios.post('http://localhost:3000/jwt', user,{
+            withCredentials: true
+          })
+            .then(data => {
+              console.log(data.data);
+            })
+            .catch(err => console.log(err));
         }
       })
       .catch((err) => {
@@ -46,7 +65,7 @@ const LogIn = () => {
         console.log(err);
       });
   };
-  const handleShow = () => {};
+  const handleShow = () => { };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -99,7 +118,7 @@ const LogIn = () => {
               </button>
             </div>
             <p className="">
-              I d'nt have a account
+              I d`nt have a account
               <Link to={"/register"}>
                 <span className="text-green-600"> Sign Up</span>
               </Link>

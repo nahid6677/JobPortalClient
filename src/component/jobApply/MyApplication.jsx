@@ -1,17 +1,25 @@
 import  { useEffect, useState } from "react";
 import UseAuth from "../../hooks/UseAuth";
+import axios from "axios";
 
 const MyApplication = () => {
   const { user } = UseAuth();
   const [jobs, setJobs] = useState([]);
   // console.log(jobs, "aaaa");
   useEffect(() => {
-    fetch(`http://localhost:3000/job-application?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        // console.log(data);
-      });
+    // fetch(`http://localhost:3000/job-application?email=${user.email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setJobs(data);
+    //     // console.log(data);
+    //   });
+    axios.get(`http://localhost:3000/job-application?email=${user.email}`, {
+      withCredentials: true
+    })
+    .then(data=>{
+      console.log(data.data)
+      setJobs(data.data);
+    })
   }, [user.email]);
   const handledelete = (id) => {
     fetch(`http://localhost:3000/job-application/${id}`, {
@@ -20,7 +28,7 @@ const MyApplication = () => {
     .then(res => res.json())
     .then(data => {
         if(data.deletedCount > 0){
-            setJobs((privious) => privious.filter(job => job._id !== id) )
+            setJobs((privious) => privious?.filter(job => job._id !== id) )
         }
     })
   };
