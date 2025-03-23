@@ -22,17 +22,18 @@ const LogIn = () => {
       .then((result) => {
         if (result.user) {
           setLoading(false);
-          console.log(result.user.email);
-          const user = { email: result.user.email }
-          // navigate(from);
-          // send a request and "ONLY" create a jwt token
-          axios.post('http://localhost:3000/jwt', user,{
-            withCredentials: true
-          })
-            .then(data => {
-              console.log(data.data);
-            })
-            .catch(err => console.log(err));
+          navigate(from)
+          // console.log(result.user.email);
+        //   const user = { email: result.user.email }
+        //   // navigate(from);
+        //   // send a request and "ONLY" create a jwt token
+        //   axios.post('http://localhost:3000/jwt', user,{
+        //     withCredentials: true
+        //   })
+        //     .then(data => {
+        //       console.log(data.data);
+        //     })
+        //     .catch(err => console.log(err));
 
         }
       })
@@ -48,17 +49,17 @@ const LogIn = () => {
     console.log(email, password);
     loginUser(email, password)
       .then((result) => {
-        if (result.user) {
+        if (result?.user) {
           setLoading(false);
           navigate(from);
           // console.log(result.user);
-          axios.post('http://localhost:3000/jwt', user,{
-            withCredentials: true
-          })
-            .then(data => {
-              console.log(data.data);
-            })
-            .catch(err => console.log(err));
+          // axios.post('http://localhost:3000/jwt', user,{
+          //   withCredentials: true
+          // })
+          //   .then(data => {
+          //     console.log(data.data);
+          //   })
+          //   .catch(err => console.log(err));
         }
       })
       .catch((err) => {

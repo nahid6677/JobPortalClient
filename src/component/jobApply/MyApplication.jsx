@@ -1,10 +1,13 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
 
 const MyApplication = () => {
   const { user } = UseAuth();
   const [jobs, setJobs] = useState([]);
+  const instanceAxios = useAxiosSecure()
   // console.log(jobs, "aaaa");
   useEffect(() => {
     // fetch(`http://localhost:3000/job-application?email=${user.email}`)
@@ -13,24 +16,30 @@ const MyApplication = () => {
     //     setJobs(data);
     //     // console.log(data);
     //   });
-    axios.get(`http://localhost:3000/job-application?email=${user.email}`, {
-      withCredentials: true // when use {withCredentials:true } then sent my browser cookies jwt token to the server side.
-    })
-    .then(data=>{
-      console.log(data.data)
-      setJobs(data.data);
-    })
+    // axios.get(`http://localhost:3000/job-application?email=${user.email}`, {
+    //   withCredentials: true // when use {withCredentials:true } then sent my browser cookies jwt token to the server side.
+    // })
+    // .then(data=>{
+    //   console.log(data.data)
+    //   setJobs(data.data);
+    // })
+    instanceAxios.get(`/job-application?email=${user.email}`)
+      .then(data => {
+        console.log(data.data)
+        setJobs(data.data);
+      })
+
   }, [user.email]);
   const handledelete = (id) => {
     fetch(`http://localhost:3000/job-application/${id}`, {
-        method: "DELETE"
+      method: "DELETE"
     })
-    .then(res => res.json())
-    .then(data => {
-        if(data.deletedCount > 0){
-            setJobs((privious) => privious?.filter(job => job._id !== id) )
+      .then(res => res.json())
+      .then(data => {
+        if (data.deletedCount > 0) {
+          setJobs((privious) => privious?.filter(job => job._id !== id))
         }
-    })
+      })
   };
   return (
     <div>
